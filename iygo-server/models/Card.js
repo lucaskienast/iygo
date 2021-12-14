@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const {
+    CARD_TYPES, 
+    CARD_RACES,
+    CARD_ATTRIBUTES
+} = require('../constants');
 
 const CardSchema = new mongoose.Schema({
     card_id: {
@@ -7,48 +12,58 @@ const CardSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true,
+        required: [true, 'Must provide a card name'],
         trim: true,
-        maxlength: [40, 'Name cannot be more than 40 characters']
+        maxlength: [100, 'Name cannot be more than 100 characters']
     },
     type: {
         type: String,
-        required: true,
-        trim: true,
-        maxlength: [20, 'Type cannot be more than 20 characters']
+        required: [true, 'Must provide a card type'],
+        enum: {
+            values: CARD_TYPES,
+            message: '{VALUE} is not supported'
+        }
     },
     desc: {
         type: String,
-        required: true,
+        required: false,
         trim: true,
-        maxlength: [500, 'Description cannot be more than 200 characters']
+        maxlength: [2000, 'Description cannot be more than 2000 characters']
     },
     atk: {
         type: Number,
-        required: false,
-        max: 5000
+        required: false, // if monster then true
+        max: 5000,
+        min: 0
     },
     def: {
         type: Number,
-        required: false,
-        max: 5000
+        required: false, // if monster then true
+        max: 5000,
+        min: 0
     },
     level: {
         type: Number,
-        required: false,
+        required: false, // if monster then true
         trim: true,
-        max: 12
+        max: 13,
+        min: 0
     },
     race: {
         type: String,
-        required: true,
-        trim: true,
-        maxlength: [20, 'Race cannot be more than 20 characters']
+        required: [true, 'Must provide a card race'], // provide limited options
+        enum: {
+            values: CARD_RACES,
+            message: '{VALUE} is not supported'
+        }
     },
     attribute: {
         type: String,
-        required: false,
-        trim: true,
+        required: false, // if monster then true + give options
+        enum: {
+            values: CARD_ATTRIBUTES,
+            message: '{VALUE} is not supported'
+        },
         maxlength: [20, 'Attribute cannot be more than 20 characters']
     },
     archetype : {
@@ -61,11 +76,12 @@ const CardSchema = new mongoose.Schema({
         type: Number,
         required: false,
         trim: true,
-        max: 13
+        max: 13,
+        min: 0
     },
-    effect_logic: {
+    effect: {
         type: Map,
-        required: false
+        required: false // if not normal card true
     },
     card_sets: {
         type: Array,
@@ -79,9 +95,9 @@ const CardSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    card_images: {
-        type: Array,
-        required: false
+    created_at: {
+        type: Date,
+        default: Date.now()
     }
 });
 
