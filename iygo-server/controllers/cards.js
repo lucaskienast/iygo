@@ -1,5 +1,30 @@
 const Card = require('../models/Card.js');
-const { createCustomError } = require('../errors/custom-error.js');
+
+const jwt = require('jsonwebtoken');
+const { BadRequestError } = require('../errors');
+
+const login = async (req, res) => {
+    console.log(req.user);
+    const {username, password} = req.body;
+    if (!username || !password) {
+        throw new BadRequestError('Please provide email and password');
+    }
+    // do not put confidential info in the jwt token
+    // eg. passwords
+    // normally send back the user id
+    // try to keep payload small for better user experience
+    //use long & complex & unguessable secret values in .env
+    const id = new Date().getDate();
+    const token = jwt.sign(
+        {id, username}, 
+        process.env.JWT_SECRET, 
+        {expiresIn: '30d'}
+    );
+    res.status(200).json({
+        msg: 'User created',
+        token
+    });
+};
 
 const getAllCards = async (req, res) => {
     const {
@@ -107,5 +132,6 @@ module.exports = {
     createCard,
     getCard,
     updateCard,
-    deleteCard
+    deleteCard,
+    login
 };
