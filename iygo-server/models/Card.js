@@ -79,7 +79,7 @@ const CardSchema = new mongoose.Schema({
         max: 13,
         min: 0
     },
-    effect_logic: {
+    effect: {
         type: Map,
         required: false // if not normal card true
     },
