@@ -1,30 +1,6 @@
+const {StatusCodes} = require('http-status-codes');
+const {NotFoundError} = require('../errors');
 const Card = require('../models/Card.js');
-
-const jwt = require('jsonwebtoken');
-const { BadRequestError } = require('../errors');
-
-const login = async (req, res) => {
-    console.log(req.user);
-    const {username, password} = req.body;
-    if (!username || !password) {
-        throw new BadRequestError('Please provide email and password');
-    }
-    // do not put confidential info in the jwt token
-    // eg. passwords
-    // normally send back the user id
-    // try to keep payload small for better user experience
-    //use long & complex & unguessable secret values in .env
-    const id = new Date().getDate();
-    const token = jwt.sign(
-        {id, username}, 
-        process.env.JWT_SECRET, 
-        {expiresIn: '30d'}
-    );
-    res.status(200).json({
-        msg: 'User created',
-        token
-    });
-};
 
 const getAllCards = async (req, res) => {
     const {
@@ -34,7 +10,8 @@ const getAllCards = async (req, res) => {
         name,
         sort,
         numericFilters,
-        fields // which props to display at output
+        fields, // which props to display at output
+        // user query option for future custom user-made cards
     } = req.query;
     const queryObject = {};
     if (type) {
@@ -46,6 +23,10 @@ const getAllCards = async (req, res) => {
     if (attribute) {
         queryObject.attribute = attribute;
     }
+    /*if (user) {
+        // queryObject.created_by equals or includes given user
+        // user from personal token or input if not self
+    }*/
     if (name) {
         queryObject.name = { $regex: name, $options: 'i' };
     }
@@ -87,24 +68,27 @@ const getAllCards = async (req, res) => {
     const skip = (page - 1) * limit;
     result = result.skip(skip).limit(limit);
     const cards = await result;
-    res.status(200).json({nbHits: cards.length, cards});
+    res.status(StatusCodes.OK).json({nbHits: cards.length, cards});
 };
 
 const createCard = async (req, res) => {
+    // use later for custom user-made cards
+    // req.body.created_by = req.user.userId;
     const card = await Card.create(req.body);
-    res.status(201).json({card});
+    res.status(StatusCodes.CREATED).json({card});
 };
 
 const getCard = async (req, res, next) => {
     const {id: card_id} = req.params;
     const card = await Card.findOne({card_id});
     if (!card) {
-        return next(createCustomError(`No card with ID: ${card_id}`, 404));
+        throw new NotFoundError(`No card with ID: ${card_id}`);
     }
-    res.status(200).json({card});
+    res.status(StatusCodes.OK).json({card});
 };
 
 const updateCard = async (req, res) => {
+    // check in future whether user is card creator
     const {id: card_id} = req.params;
     const card = await Card.findOneAndUpdate({
         card_id
@@ -113,18 +97,19 @@ const updateCard = async (req, res) => {
         runValidators: true
     });
     if (!card) {
-        return next(createCustomError(`No card with ID: ${card_id}`, 404));
+        throw new NotFoundError(`No card with ID: ${card_id}`);
     }
-    res.status(200).json({card});
+    res.status(StatusCodes.OK).json({card});
 };
 
 const deleteCard = async (req, res) => {
+    // check in future whether user is card creator
     const {id: card_id} = req.params;
     const card = await Card.findOneAndDelete({card_id});
     if (!card) {
-        return next(createCustomError(`No card with ID: ${card_id}`, 404));
+        throw new NotFoundError(`No card with ID: ${card_id}`);
     }
-    res.status(200).json({msg: 'Card successfully deleted'});
+    res.status(StatusCodes.OK).json({msg: 'Card successfully deleted'});
 };
 
 module.exports = {
@@ -132,6 +117,5 @@ module.exports = {
     createCard,
     getCard,
     updateCard,
-    deleteCard,
-    login
+    deleteCard
 };

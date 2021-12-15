@@ -1,17 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require("../middleware/auth");
+const authMiddleware = require("../middleware/authentication.js");
 const {
     getAllCards,
     createCard,
     getCard,
     updateCard,
-    deleteCard,
-    login
+    deleteCard
 } = require('../controllers/cards.js');
 
-router.route('/').get(authMiddleware, getAllCards).post(createCard);
-router.route('/login').post(login); // delete later
-router.route('/:id').get(getCard).patch(updateCard).delete(deleteCard);
+router.route('/')
+.get(getAllCards)
+.post(authMiddleware, createCard);
+
+router.route('/:id')
+.get(getCard)
+.patch(authMiddleware, updateCard)
+.delete(authMiddleware, deleteCard);
 
 module.exports = router;
