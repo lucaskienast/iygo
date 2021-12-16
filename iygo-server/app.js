@@ -3,15 +3,21 @@ dotenv.config();
 require('express-async-errors');
 const express = require('express');
 const app = express();
-
+const fileUpload = require('express-fileupload');
 const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+});
 
 const connectDB = require('./db/connect.js');
-const cardsRouter = require('./routes/cards.js');
-const authRouter = require('./routes/auth.js');
+const cardsRouter = require('./routes/cardsRoutes.js');
+const authRouter = require('./routes/authRoutes.js');
 // const authMiddleware = require("./middleware/authentication.js");
 const notFoundMiddleware = require('./middleware/not-found.js');
 const errorHandlerMiddleware = require('./middleware/error-handler.js');
@@ -26,6 +32,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(xss());
+app.use(fileUpload({useTempFiles: false}));
 
 // routes
 app.get('/', (req, res) => {
@@ -47,5 +54,5 @@ const start = async () => {
     } catch(error) {
         console.log(error);
     }
-}
+};
 start();
