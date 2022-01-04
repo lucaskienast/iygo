@@ -4,6 +4,7 @@ const {StatusCodes} = require('http-status-codes');
 const cloudinary = require('cloudinary').v2;
 const {NotFoundError} = require('../errors');
 const Card = require('../models/Card.js');
+const {saveToCloudStorage} = require('../helper');
 
 const getAllCards = async (req, res) => {
     const {
@@ -116,15 +117,24 @@ const deleteCard = async (req, res) => {
 };
 
 const countCardsAndImages = async (req, res) => {
+    console.log("1");
     const url = "https://db.ygoprodeck.com/api/v7/cardinfo.php";
     console.log("Downloading JSON from YGOPRODECK");
     const result = await axios.get(url);
-    const allCardsYgoPro = result.data.data; 
+    const allCardsYgoPro = result.data.data;
+    console.log(allCardsYgoPro[0]);
     let imgCounter = 0;
     let cardCounter = allCardsYgoPro.length;
-    for (let i = 0; i < allCardsYgoPro.length; i++) {
+    console.log("2");
+    for (let i = 0; i < /*allCardsYgoPro.length*/1; i++) {
+        console.log("3");
         const cardYgoPro = allCardsYgoPro[i];
         imgCounter += cardYgoPro.card_images.length;
+        for (let j = 0; j < /*allCardsYgoPro[i].card_images.length*/1; j++) {
+            console.log("4");
+            const imageUrl = await saveToCloudStorage(allCardsYgoPro[i].card_images[j].image_url, "large-card-images", allCardsYgoPro[i].card_images[j].id);
+            console.log(imageUrl);
+        }
     }
     res.status(StatusCodes.OK).json({imgCounter, cardCounter});
 };

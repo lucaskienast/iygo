@@ -3,6 +3,7 @@ dotenv.config();
 require('express-async-errors');
 const express = require('express');
 const app = express();
+const multer = require('multer');
 const fileUpload = require('express-fileupload');
 const helmet = require('helmet');
 const cors = require('cors');
