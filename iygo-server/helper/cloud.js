@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const gc = require('../config');
-const bucket = gc.bucket('iygo')
+const bucket = gc.bucket('iygo');
 
-const saveToCloudStorage = async (url, folderName, fileName) => {
+const saveImageToCloudStorage = async (url, folderName, fileName) => {
     // download file to local
     const response = await axios.get(url, { responseType: "arraybuffer" });
     const localPath = path.join(__dirname, '..', 'images', 'card-images', folderName , fileName + '.jpg');
@@ -26,6 +26,21 @@ const saveToCloudStorage = async (url, folderName, fileName) => {
     });
 };
 
+const getAllCloudImagesFromFolder = async (folderName) => {
+    const options = {
+        prefix: folderName + '/'
+        //delimiter: '/'
+    }
+    const [images] = await bucket.getFiles(options);
+    return images.map(image => image.metadata.name);
+};
+
+const deleteCloudImageFromFolder = async (folderName, fileName) => {
+    await bucket.file(folderName + '/' + fileName).delete();
+}
+
 module.exports = {
-    saveToCloudStorage
+    saveImageToCloudStorage,
+    getAllCloudImagesFromFolder,
+    deleteCloudImageFromFolder
 };

@@ -1,5 +1,11 @@
-const { saveToCloudStorage } = require('./image-cloud-upload.js');
+const {
+    saveImageToCloudStorage, 
+    getAllCloudImagesFromFolder,
+    deleteCloudImageFromFolder
+} = require('./cloud.js');
 
 module.exports = {
-    saveToCloudStorage
+    saveImageToCloudStorage,
+    getAllCloudImagesFromFolder,
+    deleteCloudImageFromFolder
 }
