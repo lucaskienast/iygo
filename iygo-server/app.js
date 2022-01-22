@@ -16,6 +16,7 @@ cloudinary.config({
     api_secret: process.env.CLOUD_API_SECRET
 });
 
+const {printWelcomeMessage} = require('./helper');
 const connectDB = require('./db/connect.js');
 const cardsRouter = require('./routes/cardsRoutes.js');
 const authRouter = require('./routes/authRoutes.js');
@@ -44,6 +45,7 @@ app.use('/api/v1/cards', /*authMiddleware,*/ cardsRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
+printWelcomeMessage();
 const port = process.env.PORT || 3000;
 const start = async () => {
     try {
