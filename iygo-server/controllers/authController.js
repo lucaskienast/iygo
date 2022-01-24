@@ -50,15 +50,24 @@ const login = async (req, res) => {
     if (!isPasswordCorrect) {
         throw new UnauthenticatedError("Invalid credentials");
     }
-    const token = user.createJWT();
-    res.status(StatusCodes.OK).json({
-        user: {name: user.name},
-        token
+    const tokenUser = createTokenUser(user);
+    attachCookiesToResponse({
+        res,
+        user: tokenUser
+    });
+    res.status(StatusCodes.CREATED).json({
+        user: tokenUser,
     });
 };
 
 const logout = async (req, res) => {
-    res.send('logout');
+    res.cookie('token', 'logout', {
+        httpOnly: true,
+        expires: new Date(Date.now())
+    });
+    res.status(StatusCodes.OK).json({
+        msg: "Logout successful"
+    });
 };
 
 module.exports = {
