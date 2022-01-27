@@ -44,7 +44,7 @@ app.get('/api/v1', (req, res) => {
 });
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/cards', /*authMiddleware,*/ cardsRouter);
+app.use('/api/v1/cards', cardsRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
