@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/authentication.js');
+const {
+    authenticateUser, 
+    authorizePermissions
+} = require('../middleware/authentication.js');
 const {
     getAllCards,
     createCard,
@@ -13,22 +16,22 @@ const {
 
 router.route('/')
 .get(getAllCards)
-.post(authMiddleware, createCard);
+.post(authenticateUser, createCard);
 
 router.route('/update')
-.post(authMiddleware, updateCardImages);
+.post(authenticateUser, updateCardImages);
 
 router.route('/count')
-.get(authMiddleware, countCardsAndImages);
+.get(authenticateUser, countCardsAndImages);
 
 /*
 router.route('/uploads')
-.post(authMiddleware, getAllCardsJSON);
+.post(authenticateUser, getAllCardsJSON);
 */
 
 router.route('/:id')
 .get(getCard)
-.patch(authMiddleware, updateCard)
-.delete(authMiddleware, deleteCard);
+.patch(authenticateUser, updateCard)
+.delete(authenticateUser, deleteCard);
 
 module.exports = router;

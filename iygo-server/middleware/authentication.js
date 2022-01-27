@@ -1,25 +1,34 @@
-const jwt = require("jsonwebtoken");
-const {UnauthenticatedError} = require('../errors');
+const {isTokenValid} = require('../helper');
+const {
+    UnauthenticatedError, 
+    UnauthorizedError
+} = require('../errors');
 
-const authenticationMiddleware = async (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new UnauthenticatedError('Authentication invalid');
+const authenticateUser = async (req, res, next) => {
+    const token = req.signedCookies.token;
+    if(!token) {
+        throw new UnauthenticatedError("Authentification invalid.");
     }
-    const token = authHeader.split(' ')[1];
     try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = {
-            userId: payload.userId,
-            name: payload.name
-        };
-        // alternatively
-        // const user = User.findbyId(payload.id).select('-password');
-        // req.user = user;
+        const payload = isTokenValid({token});
+        const {name, userId, role} = payload;
+        req.user = { name, userId, role};
         next();
     } catch (error) {
-        throw new UnauthenticatedError('Authentication invalid');
+        throw new UnauthenticatedError("Authentification invalid.");
     }
 };
 
-module.exports = authenticationMiddleware;
+const authorizePermissions = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            throw new UnauthorizedError("Unauthorized to acces this route.");
+        }
+        next();
+    };
+};
+
+module.exports = {
+    authenticateUser,
+    authorizePermissions
+};
