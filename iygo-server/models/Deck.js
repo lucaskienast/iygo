@@ -1,17 +1,5 @@
 const mongoose = require('mongoose');
 
-const CardInDeckSchema = new mongoose.Schema({
-    card_id: {
-        type: String,
-        ref: 'Card',
-        required: true
-    },
-    amount: {
-        type: Number,
-        required: true
-    }
-});
-
 const DeckSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -26,7 +14,10 @@ const DeckSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    cards: [CardInDeckSchema],
+    cards: {
+        type: Array,
+        required: true
+    },
     user: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
