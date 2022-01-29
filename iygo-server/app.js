@@ -16,6 +16,7 @@ const connectDB = require('./db/connect.js');
 const cardsRouter = require('./routes/cardsRoutes.js');
 const authRouter = require('./routes/authRoutes.js');
 const userRouter = require('./routes/userRoutes');
+const decksRouter = require('./routes/deckRoutes');
 // const authMiddleware = require("./middleware/authentication.js");
 const notFoundMiddleware = require('./middleware/not-found.js');
 const errorHandlerMiddleware = require('./middleware/error-handler.js');
@@ -45,6 +46,7 @@ app.get('/api/v1', (req, res) => {
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/cards', cardsRouter);
+app.use('/api/v1/decks', decksRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
