@@ -1,3 +1,3 @@
 # Yu-Gi-Oh! MERN Webapp "IYGO"
 
-Implementation of YUGIOH trading card game with REST API.
+Implementation of Yu-Gi-Oh! trading card game with REST API.
