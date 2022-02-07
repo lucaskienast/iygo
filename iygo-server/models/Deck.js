@@ -14,9 +14,13 @@ const DeckSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    nbCards: {
+        type: Number,
+        required: true
+    },
     cards: {
         type: Array,
-        required: true
+        required: [true, 'Must provide at least one card'],
     },
     user: {
         type: mongoose.Schema.ObjectId,
