@@ -1,4 +1,4 @@
-# Yu-Gi-Oh! Webapplication (MERN-Stack)
+# Yu-Gi-Oh! Webapp (MERN-Stack)
 
 Implementation of Yu-Gi-Oh! trading card game with REST API.
 
