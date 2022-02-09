@@ -1,8 +1,9 @@
 const {StatusCodes} = require('http-status-codes');
-const Deck = require('../models/Deck');
+const Deck = require('../models/Deck.js');
 const Card = require('../models/Card.js');
-const User = require('../models/User');
+const User = require('../models/User.js');
 const {checkPermissions} = require('../helper');
+const {getAllCards} = require('./cardsController.js');
 const {
     BadRequestError, 
     UnauthenticatedError,
@@ -12,13 +13,13 @@ const {
 const getAllDecks = async (req, res) => {
     // extend for avatar and cards with amount
     const {
-        name, // name of deck
-        user, //userId
-        nbCards, // #cards in deck
+        name,
+        user,
+        nbCards,
         sort,
         fields,
-        cardFilters // intersection of all card filters (card api endpoint)
     } = req.query;
+    const {cardFilters} = req.body;
     const queryObject = {};
     if (user) {
         queryObject.user = user;
@@ -53,13 +54,110 @@ const getAllDecks = async (req, res) => {
         result = result.select(fieldsList);
     }
 
-    // check if deck includes card filter set
+    let decks = await result;
+
+    if (cardFilters) {
+        let cardSets = [];
+        for(let i = 0; i < cardFilters.length; i++) {
+            const amount = cardFilters[i].amount;
+            const criteria = cardFilters[i].criteria;
+            const {
+                type,
+                race,
+                attribute,
+                name,
+                numericFilters,
+                // user query option for future custom user-made cards
+            } = criteria;
+            const queryObject = {};
+            if (type) {
+                queryObject.type = type;
+            }
+            if (race) {
+                queryObject.race = race;
+            }
+            if (attribute) {
+                queryObject.attribute = attribute;
+            }
+            /*if (user) {
+                // queryObject.created_by equals or includes given user
+                // user from personal token or input if not self
+            }*/
+            if (name) {
+                queryObject.name = { $regex: name, $options: 'i' };
+            }
+            if (numericFilters) {
+                const operatorMap = {
+                    '>': '$gt',
+                    '>=': '$gte',
+                    '=': '$eq',
+                    '<': '$lt',
+                    '<=': '$lte'
+                };
+                const regEx = /\b(<|>|>=|=|<|<=)\b/g;
+                let filters = numericFilters.replace(regEx, (match) => {
+                    return `-${operatorMap[match]}-`;
+                });
+                const options = ['atk', 'def', 'level', 'scale'];
+                filters = filters.split(',').forEach((item) => {
+                    const [field, operator, value] = item.split('-');
+                    if (options.includes(field)) {
+                        queryObject[field] = { 
+                            [operator]: Number(value) 
+                        };
+                    }
+                });
+            }
+            let result = Card.find(queryObject).select(['card_id']);
+            const cards = await result;
+            cardSets = [...cardSets, {amount, cards}];
+        }
+        let filteredDecks = [];
+        for (let i = 0; i < decks.length; i++) {
+            const deck = decks[i];
+            let passedAllFilters = true;
+            console.log("____________________________________________________");
+            console.log(deck);
+            for (let j = 0; j < cardSets.length; j++) {
+                let filterHits = 0;
+                const cardSet = cardSets[j];
+                const cardSetAmount = cardSet.amount;
+                console.log(cardSetAmount);
+                const setCards = cardSet.cards;
+                const setCardIds = setCards.map((setCard) => setCard.card_id);
+                console.log(setCardIds);
+                for (let k = 0; k < deck.cards.length; k++) {
+                    const deckCard = deck.cards[k];
+                    console.log(deckCard);
+                    for (let l = 0; l < deckCard.amount; l++) {
+                        if (setCardIds.includes(deckCard.card_id)){
+                            filterHits++;
+                        }
+                        if (filterHits >= cardSetAmount) {
+                            break;
+                        }
+                    }
+                    if (filterHits >= cardSetAmount) {
+                        break;
+                    }
+                }
+                if (filterHits < cardSetAmount) {
+                    passedAllFilters = false;
+                }
+                console.log(filterHits);
+            }
+            if (passedAllFilters === true) {
+                filteredDecks = [...filteredDecks, deck];
+            }
+        }
+        decks = filteredDecks;
+    }
 
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-    result = result.skip(skip).limit(limit);
-    const decks = await result;
+    decks = decks.slice(skip, skip+limit);
+
     res.status(StatusCodes.OK).json({nbHits: decks.length, decks});
 };
 
