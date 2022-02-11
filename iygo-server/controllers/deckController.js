@@ -204,8 +204,20 @@ const createDeck = async (req, res) => {
     res.status(StatusCodes.CREATED).json({deck});
 };
 
-const updateDeck = async (req, res) => {
-    res.status(StatusCodes.OK).send("update deck");
+const updateDeck = async (req, res) => {    
+    const {id: deck_id} = req.params;
+    const deck = await Deck.findOne({_id: deck_id});
+    if (!deck) {
+        throw new NotFoundError(`No deck with ID: ${deck_id}`);
+    }
+    const {name, cards} = req.body;
+    if (!name && !cards) {
+        throw new BadRequestError(`Please provide either a new deck name or a different set of cards.`);
+    }
+    deck.name = name;
+    deck.cards = cards;
+    await deck.save();
+    res.status(StatusCodes.OK).send({deck});
 };
 
 const deleteDeck = async (req, res) => {
