@@ -162,11 +162,18 @@ const getAllDecks = async (req, res) => {
 };
 
 const getSingleDeck = async (req, res) => {
-    res.status(StatusCodes.OK).send("get single deck");
+    const {id: deck_id} = req.params;
+    const deck = await Deck.findOne({_id: deck_id});
+    if (!deck) {
+        throw new NotFoundError(`No deck with ID: ${deck_id}`);
+    }
+    res.status(StatusCodes.OK).json({deck});
 };
 
 const getCurrentUsersDecks = async (req, res) => {
-    res.status(StatusCodes.CREATED).send("get current user's decks");
+    const user = req.user;
+    const userDecks = await Deck.find({user: user.userId})
+    res.status(StatusCodes.OK).json({nbHits: userDecks.length, userDecks});
 };
 
 const createDeck = async (req, res) => {
