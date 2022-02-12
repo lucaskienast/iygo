@@ -13,11 +13,18 @@ const getAllAvatars = async (req, res) => {
 };
 
 const getSingleAvatar = async (req, res) => {
-    res.status(StatusCodes.OK).json({msg: "get single avatar"});
+    const {id: avatar_id} = req.params;
+    const avatar = await Avatar.findOne({_id: avatar_id});
+    if (!avatar) {
+        throw new NotFoundError(`No avatar with ID: ${avatar_id}`);
+    }
+    res.status(StatusCodes.OK).json({avatar});
 };
 
 const getCurrentUsersAvatars = async (req, res) => {
-    res.status(StatusCodes.OK).json({msg: "get current user's avatars"});
+    const user = req.user;
+    const userAvatars = await Avatar.find({user: user.userId})
+    res.status(StatusCodes.OK).json({nbHits: userAvatars.length, userAvatars});
 };
 
 const createAvatar = async (req, res) => {
