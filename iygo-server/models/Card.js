@@ -96,9 +96,9 @@ const CardSchema = new mongoose.Schema({
         required: true
     },
     created_by: {
-        type: mongoose.Schema.ObjectId, // future will be map of userId arrays for name, image, and effect
+        type: mongoose.Schema.ObjectId,
         ref: 'User',
-        required: false // online if made via future card builder tool
+        required: false
     },
     created_at: {
         type: Date,
