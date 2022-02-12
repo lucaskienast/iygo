@@ -61,7 +61,17 @@ const createAvatar = async (req, res) => {
 };
 
 const updateAvatar = async (req, res) => {
-    res.status(StatusCodes.OK).json({msg: "update avatar"});
+    const {id: avatar_id} = req.params;
+    const avatar = await Avatar.findOneAndUpdate({
+        _id: avatar_id
+    }, req.body, {
+        new: true,
+        runValidators: true
+    });
+    if (!avatar) {
+        throw new NotFoundError(`No avatar with ID: ${avatar_id}`);
+    }
+    res.status(StatusCodes.OK).send({avatar});
 };
 
 const deleteAvatar = async (req, res) => {
