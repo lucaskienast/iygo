@@ -12,13 +12,15 @@ $ cd iygo
 ## Features
 Already built-in:
 - Card database
-- User/player register, login, edit
+- User/player register, login, edit (server)
+- Deck CRUD operations (server)
 
 In progress:
-- Deck builder
+- Avatar CRUD operations 
 
 To come:
-- Avatar builder
+- Deck builder (client)
+- Avatar builder (client)
 - Duel mode customization
 - PvP action
 - Players chat
