@@ -26,7 +26,7 @@ const CardSchema = new mongoose.Schema({
     },
     desc: {
         type: String,
-        required: false,
+        required: [true, 'Must provide a card description'],
         trim: true,
         maxlength: [2000, 'Description cannot be more than 2000 characters']
     },
