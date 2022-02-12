@@ -3,7 +3,6 @@ const Deck = require('../models/Deck.js');
 const Card = require('../models/Card.js');
 const User = require('../models/User.js');
 const {checkPermissions} = require('../helper');
-const {getAllCards} = require('./cardsController.js');
 const {
     BadRequestError, 
     UnauthenticatedError,
@@ -116,19 +115,14 @@ const getAllDecks = async (req, res) => {
         for (let i = 0; i < decks.length; i++) {
             const deck = decks[i];
             let passedAllFilters = true;
-            console.log("____________________________________________________");
-            console.log(deck);
             for (let j = 0; j < cardSets.length; j++) {
                 let filterHits = 0;
                 const cardSet = cardSets[j];
                 const cardSetAmount = cardSet.amount;
-                console.log(cardSetAmount);
                 const setCards = cardSet.cards;
                 const setCardIds = setCards.map((setCard) => setCard.card_id);
-                console.log(setCardIds);
                 for (let k = 0; k < deck.cards.length; k++) {
                     const deckCard = deck.cards[k];
-                    console.log(deckCard);
                     for (let l = 0; l < deckCard.amount; l++) {
                         if (setCardIds.includes(deckCard.card_id)){
                             filterHits++;
@@ -144,7 +138,6 @@ const getAllDecks = async (req, res) => {
                 if (filterHits < cardSetAmount) {
                     passedAllFilters = false;
                 }
-                console.log(filterHits);
             }
             if (passedAllFilters === true) {
                 filteredDecks = [...filteredDecks, deck];
