@@ -1,5 +1,6 @@
 const {StatusCodes} = require('http-status-codes');
 const Avatar = require('../models/Avatar.js');
+const User = require('../models/User.js');
 const {checkPermissions} = require('../helper');
 const {
     BadRequestError, 
@@ -75,7 +76,26 @@ const updateAvatar = async (req, res) => {
 };
 
 const deleteAvatar = async (req, res) => {
-    res.status(StatusCodes.OK).json({msg: "delete avatar"});
+    const {password} = req.body;
+    const avatarId = req.params.id;
+    if (!password) {
+        throw new BadRequestError(`Please provide a password.`);
+    }
+    if (!avatarId) {
+        throw new BadRequestError(`Please provide an avatar id.`);
+    }
+    const avatar = await Avatar.findOne({_id: avatarId});
+    if (!avatar) {
+        throw new NotFoundError(`No avatar with id ${avatarId}`);
+    }
+    checkPermissions(req.user, avatar.user);
+    const user = await User.findOne({_id: req.user.userId});
+    const isPasswordCorrect = await user.comparePassword(password);
+    if (!isPasswordCorrect) {
+        throw new UnauthenticatedError(`Invalid credentials.`);
+    }
+    await Avatar.findOneAndDelete({_id: avatarId});
+    res.status(StatusCodes.OK).json({msg: 'Avatar successfully deleted'});
 };
 
 module.exports = {
