@@ -8,7 +8,8 @@ const {
 } = require('../errors');
 
 const getAllAvatars = async (req, res) => {
-    res.status(StatusCodes.OK).json({msg: "get all avatars"});
+    const avatars = await Avatar.find({});
+    res.status(StatusCodes.OK).json({avatars});
 };
 
 const getSingleAvatar = async (req, res) => {
