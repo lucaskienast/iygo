@@ -17,6 +17,7 @@ const cardsRouter = require('./routes/cardsRoutes.js');
 const authRouter = require('./routes/authRoutes.js');
 const userRouter = require('./routes/userRoutes');
 const decksRouter = require('./routes/deckRoutes');
+const avatarRouter = require('./routes/avatarRoutes');
 // const authMiddleware = require("./middleware/authentication.js");
 const notFoundMiddleware = require('./middleware/not-found.js');
 const errorHandlerMiddleware = require('./middleware/error-handler.js');
@@ -47,6 +48,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/cards', cardsRouter);
 app.use('/api/v1/decks', decksRouter);
+app.use('/api/v1/avatars', avatarRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 

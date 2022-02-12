@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const CardSchema = new mongoose.Schema({
+const AvatarSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Must provide a card name'],
+        required: [true, 'Must provide an avatar name'],
         trim: true,
         maxlength: [100, 'Name cannot be more than 100 characters']
     },
@@ -33,4 +33,4 @@ const CardSchema = new mongoose.Schema({
 }, {timestamps: true}
 );
 
-module.exports = mongoose.model('Avatar', CardSchema);
+module.exports = mongoose.model('Avatar', AvatarSchema);
