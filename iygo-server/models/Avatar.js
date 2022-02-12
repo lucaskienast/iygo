@@ -9,7 +9,7 @@ const AvatarSchema = new mongoose.Schema({
     },
     desc: {
         type: String,
-        required: false,
+        required: [true, 'Must provide an avatar description'],
         trim: true,
         maxlength: [2000, 'Description cannot be more than 2000 characters']
     },
@@ -19,16 +19,12 @@ const AvatarSchema = new mongoose.Schema({
     },
     images: {
         type: Array,
-        required: true
-    },
-    created_by: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
         required: false
     },
-    created_at: {
-        type: Date,
-        default: Date.now()
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
     }
 }, {timestamps: true}
 );
