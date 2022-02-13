@@ -17,6 +17,10 @@ const AvatarSchema = new mongoose.Schema({
         type: Map,
         required: false // set to true after effect logic
     },
+    decks: {
+        type: Array,
+        required: false
+    },
     images: {
         type: Array,
         required: false
