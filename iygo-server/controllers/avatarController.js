@@ -12,6 +12,7 @@ const getAllAvatars = async (req, res) => {
     const {
         name,
         desc,
+        deck,
         sort,
         fields
     } = req.query;
@@ -21,6 +22,9 @@ const getAllAvatars = async (req, res) => {
     }
     if (desc) {
         queryObject.desc = { $regex: desc, $options: 'i' };
+    }
+    if (deck) {
+        queryObject.decks = { $all : [deck]};
     }
     let result = Avatar.find(queryObject);
     if (sort) {
@@ -62,6 +66,7 @@ const createAvatar = async (req, res) => {
         name,
         desc,
         effect,
+        decks,
         images
     } = req.body;
     if (!name || !desc) { // add images and effect later
