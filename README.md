@@ -11,7 +11,7 @@ $ cd iygo
 
 ## Features
 Already built-in:
-- Card database
+- Card database & CRUD operations (server)
 - User/player register, login, edit (server)
 - Deck CRUD operations (server)
 
