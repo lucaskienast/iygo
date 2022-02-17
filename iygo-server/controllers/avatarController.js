@@ -3,6 +3,12 @@ const Avatar = require('../models/Avatar.js');
 const User = require('../models/User.js');
 const {checkPermissions} = require('../helper');
 const {
+    saveImageToCloudStorage,
+    saveImageToCloudStorageFromRequestFile,
+    getAllCloudImagesFromFolder,
+    deleteCloudImageFromFolder
+} = require('../helper');
+const {
     BadRequestError, 
     UnauthenticatedError,
     NotFoundError
@@ -66,39 +72,38 @@ const createAvatar = async (req, res) => {
         name,
         desc,
         effect,
-        decks,
-        images
+        decks
     } = req.body;
-    if (!name || !desc) { // add images and effect later
+    const image = req.files.image;
+    if (!name || !desc || !image) { // add images and effect later
         throw new BadRequestError(`Please provide an avatar name, description, and at least one image.`);
     }
-
-    /*
-    // upload image to cloud
-    let cloudImageUrls = [];
-    for (let i = 0; i < images.length; i++) {
-        // check if image has more than one colour ie. not blank
-        console.log(images[i]);
-        // upload image to cloud
-        const publicImageUrl = await saveImageToCloudStorage(ygoproCardImageDuo[sizeKey].url, ygoproCardImageDuo[sizeKey].folder, ygoproAllCards[i].card_images[j].id);
-        cloudImageUrls = [...cloudImageUrls, publicImageUrl];
-    }
-    // save avatar with image url from cloud
-    */
-
+    const imageName = name.replace(/\s/g, "") + req.user.userId;
+    const imageUrl = await saveImageToCloudStorageFromRequestFile(image, 'avatar-images', imageName);
     const avatar = await Avatar.create({
         name,
         desc,
+        images: [imageUrl],
         user: req.user.userId
-    })
+    });
     res.status(StatusCodes.CREATED).json({avatar});
 };
 
 const updateAvatar = async (req, res) => {
     const {id: avatar_id} = req.params;
+    let { name, decks } = req.body;
+    let updateObject = req.body;
+    const image = req.files.image;
+    if (image) {
+        const imageName = name.replace(/\s/g, "") + req.user.userId;
+        const imageUrl = await saveImageToCloudStorageFromRequestFile(image, 'avatar-images', imageName);
+        updateObject.images = [imageUrl];
+    }
+    decks = JSON.parse(decks).decks;
+    updateObject.decks = decks;
     const avatar = await Avatar.findOneAndUpdate({
         _id: avatar_id
-    }, req.body, {
+    }, updateObject, {
         new: true,
         runValidators: true
     });

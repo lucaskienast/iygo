@@ -39,8 +39,30 @@ const saveImageToCloudStorage = async (url, folderName, fileName) => {
     });
 };
 
+const saveImageToCloudStorageFromRequestFile = async (image, folderName, fileName) => {
+    const localPath = path.join(__dirname, '..', 'images', folderName, fileName + '.jpg');
+    console.log("Hello 1");
+    await image.mv(localPath);
+    console.log("Hello 2");
+    return new Promise((resolve, reject) => {
+        const localReadStream = fs.createReadStream(localPath);
+        const remoteWriteStream = bucket.file(path.join(folderName, fileName + ".jpg")).createWriteStream({resumable: false});
+        localReadStream.pipe(remoteWriteStream)
+        .on('finish', () => {
+            fs.unlink(localPath, (err) => console.log(err));
+            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${folderName}/${fileName}.jpg`;
+            resolve(publicUrl);
+        })
+        .on('error', (err) => {
+            fs.unlink(localPath, (err) => console.log(err));
+            reject(err);
+        });
+    });
+};
+
 module.exports = {
     saveImageToCloudStorage,
+    saveImageToCloudStorageFromRequestFile,
     getAllCloudImagesFromFolder,
     deleteCloudImageFromFolder
 };
