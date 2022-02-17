@@ -2,6 +2,7 @@ const {printWelcomeMessage} = require('./welcome.js');
 const {checkPermissions} = require('./checkPermissions.js');
 const {
     saveImageToCloudStorage, 
+    saveImageToCloudStorageFromRequestFile,
     getAllCloudImagesFromFolder,
     deleteCloudImageFromFolder
 } = require('./cloud.js');
@@ -14,6 +15,7 @@ const {
 
 module.exports = {
     saveImageToCloudStorage,
+    saveImageToCloudStorageFromRequestFile,
     getAllCloudImagesFromFolder,
     deleteCloudImageFromFolder,
     printWelcomeMessage,
