@@ -7,11 +7,10 @@ const {
 const {
     getAllCards,
     createCard,
-    getCard,
+    getSingleCard,
     updateCard,
     deleteCard,
-    updateCardImages,
-    countCardsAndImages
+    updateCardImages
 } = require('../controllers/cardsController.js');
 
 router.route('/')
@@ -21,16 +20,8 @@ router.route('/')
 router.route('/update')
 .post(authenticateUser, updateCardImages);
 
-router.route('/count')
-.get(authenticateUser, countCardsAndImages);
-
-/*
-router.route('/uploads')
-.post(authenticateUser, getAllCardsJSON);
-*/
-
 router.route('/:id')
-.get(getCard)
+.get(getSingleCard)
 .patch(authenticateUser, updateCard)
 .delete(authenticateUser, deleteCard);
 
