@@ -11,12 +11,14 @@ $ cd iygo
 
 ## Features
 Already built-in:
-- Card database & CRUD operations (server)
-- User/player register, login, edit (server)
-- Deck CRUD operations (server)
+- Card DB and API
+- User/player DB and API
+- Deck DB and API
+- Avatar DB and API
 
 In progress:
-- Avatar CRUD operations 
+- Service files
+- Refactoring
 
 To come:
 - Deck builder (client)
