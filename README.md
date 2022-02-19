@@ -12,7 +12,7 @@ $ cd iygo
 ## Features
 Already built-in:
 - Card DB and API
-- User/player DB and API
+- User DB and API
 - Deck DB and API
 - Avatar DB and API
 
