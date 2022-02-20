@@ -5,7 +5,8 @@ const AvatarSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Must provide an avatar name'],
         trim: true,
-        maxlength: [100, 'Name cannot be more than 100 characters']
+        maxlength: [100, 'Name cannot be more than 100 characters'],
+        unique: [true, "Avatar name must be unique."]
     },
     desc: {
         type: String,
