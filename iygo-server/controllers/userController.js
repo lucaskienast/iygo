@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const {StatusCodes} = require('http-status-codes');
 const userServices = require('../services/user-services');
 const {
