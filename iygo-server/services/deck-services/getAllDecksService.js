@@ -1,5 +1,6 @@
 const Deck = require('../../models/Deck.js');
 const Card = require('../../models/Card.js');
+const sharedService = require('../shared-services/getCardsService.js');
 
 const getAllDecks = async (req, callback) => {
     // extend for avatar and cards with amount
@@ -52,54 +53,7 @@ const getAllDecks = async (req, callback) => {
         for(let i = 0; i < cardFilters.length; i++) {
             const amount = cardFilters[i].amount;
             const criteria = cardFilters[i].criteria;
-            const {
-                type,
-                race,
-                attribute,
-                name,
-                numericFilters,
-                // user query option for future custom user-made cards
-            } = criteria;
-            const queryObject = {};
-            if (type) {
-                queryObject.type = type;
-            }
-            if (race) {
-                queryObject.race = race;
-            }
-            if (attribute) {
-                queryObject.attribute = attribute;
-            }
-            /*if (user) {
-                // queryObject.created_by equals or includes given user
-                // user from personal token or input if not self
-            }*/
-            if (name) {
-                queryObject.name = { $regex: name, $options: 'i' };
-            }
-            if (numericFilters) {
-                const operatorMap = {
-                    '>': '$gt',
-                    '>=': '$gte',
-                    '=': '$eq',
-                    '<': '$lt',
-                    '<=': '$lte'
-                };
-                const regEx = /\b(<|>|>=|=|<|<=)\b/g;
-                let filters = numericFilters.replace(regEx, (match) => {
-                    return `-${operatorMap[match]}-`;
-                });
-                const options = ['atk', 'def', 'level', 'scale'];
-                filters = filters.split(',').forEach((item) => {
-                    const [field, operator, value] = item.split('-');
-                    if (options.includes(field)) {
-                        queryObject[field] = { 
-                            [operator]: Number(value) 
-                        };
-                    }
-                });
-            }
-            let result = Card.find(queryObject).select(['card_id']);
+            let result = sharedService.getCards(criteria).select(['card_id']);
             const cards = await result;
             cardSets = [...cardSets, {amount, cards}];
         }
