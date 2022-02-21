@@ -37,7 +37,7 @@ const createDeck = async (req, res) => {
                 throw new BadRequestError(error.message);
             }
         }
-        return res.status(StatusCodes.OK).json(result);
+        return res.status(StatusCodes.CREATED).json(result);
     });
 };
 

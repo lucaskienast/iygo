@@ -10,7 +10,7 @@ const getAllCards = async (req, res) => {
 
 const createCard = async (req, res) => {
     await cardServices.createCard(req, (result) => {
-        return res.status(StatusCodes.OK).json(result);
+        return res.status(StatusCodes.CREATED).json(result);
     });
 };
 

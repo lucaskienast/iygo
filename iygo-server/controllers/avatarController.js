@@ -32,7 +32,7 @@ const createAvatar = async (req, res) => {
         if (error) {
             throw new BadRequestError(error);
         }
-        return res.status(StatusCodes.OK).json(result);
+        return res.status(StatusCodes.CREATED).json(result);
     });
 };
 
