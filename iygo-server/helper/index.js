@@ -1,7 +1,7 @@
 const {printWelcomeMessage} = require('./welcome.js');
 const {checkPermissions} = require('./checkPermissions.js');
 const {
-    saveImageToCloudStorage, 
+    saveImageToCloudStorageFromUrl, 
     saveImageToCloudStorageFromRequestFile,
     getAllCloudImagesFromFolder,
     deleteCloudImageFromFolder
@@ -12,9 +12,13 @@ const {
     attachCookiesToResponse,
     createTokenUser
 } = require('./jwt.js');
+const {
+    sendEmail,
+    sendVerificationEmail
+} = require('./email');
 
 module.exports = {
-    saveImageToCloudStorage,
+    saveImageToCloudStorageFromUrl,
     saveImageToCloudStorageFromRequestFile,
     getAllCloudImagesFromFolder,
     deleteCloudImageFromFolder,
@@ -23,5 +27,7 @@ module.exports = {
     isTokenValid,
     attachCookiesToResponse,
     createTokenUser,
-    checkPermissions
+    checkPermissions,
+    sendEmail,
+    sendVerificationEmail
 }

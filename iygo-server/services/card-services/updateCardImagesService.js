@@ -2,7 +2,7 @@ const axios = require('axios');
 const jimp = require("jimp");
 const Card = require('../../models/Card.js');
 const {
-    saveImageToCloudStorage,
+    saveImageToCloudStorageFromUrl,
     getAllCloudImagesFromFolder,
     deleteCloudImageFromFolder
 } = require('../../helper');
@@ -54,7 +54,7 @@ const updateCardImages = async (req, callback) => {
                     // no image with same id in cloud
                     // upload new image to cloud
                     console.log("Uploading new image to cloud");
-                    const publicImageUrl = await saveImageToCloudStorage(ygoproCardImageDuo[sizeKey].url, ygoproCardImageDuo[sizeKey].folder, ygoproAllCards[i].card_images[j].id);
+                    const publicImageUrl = await saveImageToCloudStorageFromUrl(ygoproCardImageDuo[sizeKey].url, ygoproCardImageDuo[sizeKey].folder, ygoproAllCards[i].card_images[j].id);
                     dbImageUrlToCheck = publicImageUrl;
                 } else {
                     // found image with same id in cloud

@@ -34,8 +34,18 @@ const logout = async (req, res) => {
     });
 };
 
+const verifyEmail = async (req, res) => {
+   await authServices.verifyEmail(req, res, (error, result) => {
+        if (error && error instanceof UnauthenticatedError) {
+            throw new UnauthenticatedError(error.message);
+        }
+        return res.status(StatusCodes.OK).json(result);
+    });
+};
+
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    verifyEmail
 }
