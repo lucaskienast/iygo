@@ -43,9 +43,29 @@ const verifyEmail = async (req, res) => {
     });
 };
 
+const forgotPassword = async (req, res) => {
+   await authServices.forgotPassword(req, res, (error, result) => {
+        if (error && error instanceof BadRequestError) {
+            throw new BadRequestError(error.message);
+        }
+        return res.status(StatusCodes.OK).json(result);
+    });
+};
+
+const resetPassword = async (req, res) => {
+   await authServices.resetPassword(req, res, (error, result) => {
+        if (error && error instanceof UnauthenticatedError) {
+            throw new UnauthenticatedError(error.message);
+        }
+        return res.status(StatusCodes.OK).json(result);
+    });
+};
+
 module.exports = {
     register,
     login,
     logout,
-    verifyEmail
+    verifyEmail,
+    forgotPassword,
+    resetPassword
 }

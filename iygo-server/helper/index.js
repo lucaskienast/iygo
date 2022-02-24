@@ -1,5 +1,6 @@
 const {printWelcomeMessage} = require('./welcome.js');
 const {checkPermissions} = require('./checkPermissions.js');
+const {createHash} = require('./createHash.js');
 const {
     saveImageToCloudStorageFromUrl, 
     saveImageToCloudStorageFromRequestFile,
@@ -14,7 +15,8 @@ const {
 } = require('./jwt.js');
 const {
     sendEmail,
-    sendVerificationEmail
+    sendVerificationEmail,
+    sendResetPasswordEmail
 } = require('./email');
 
 module.exports = {
@@ -29,5 +31,7 @@ module.exports = {
     createTokenUser,
     checkPermissions,
     sendEmail,
-    sendVerificationEmail
+    sendVerificationEmail,
+    sendResetPasswordEmail,
+    createHash
 }
