@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const UserSchema = mongoose.Schema({
     name: {
@@ -36,6 +35,12 @@ const UserSchema = mongoose.Schema({
         default: false
     },
     verified: Date,
+    passwordToken: {
+        type: String
+    },
+    passwordTokenExpirationDate: {
+        type: Date
+    },
     created_at: {
         type: Date,
         default: Date.now()
