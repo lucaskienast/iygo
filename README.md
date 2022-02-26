@@ -15,10 +15,10 @@ Already built-in:
 - User DB and API
 - Deck DB and API
 - Avatar DB and API
+- Authentication
 
 In progress:
-- Service files
-- Refactoring
+- Login/Register UI
 
 To come:
 - Deck builder (client)
