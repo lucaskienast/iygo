@@ -19,6 +19,7 @@ Already built-in:
 
 In progress:
 - Login/Register UI
+- Dummy season data
 
 To come:
 - Deck builder (client)
