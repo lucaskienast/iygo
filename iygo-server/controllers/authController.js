@@ -54,8 +54,8 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
    await authServices.resetPassword(req, res, (error, result) => {
-        if (error && error instanceof UnauthenticatedError) {
-            throw new UnauthenticatedError(error.message);
+        if (error && error instanceof BadRequestError) {
+            throw new BadRequestError(error.message);
         }
         return res.status(StatusCodes.OK).json(result);
     });
