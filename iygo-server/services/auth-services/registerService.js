@@ -1,11 +1,7 @@
 const crypto = require('crypto');
 const User = require('../../models/User.js');
 const {BadRequestError} = require('../../errors');
-const {
-    sendVerificationEmail,
-    createTokenUser,
-    attachCookiesToResponse
-} = require('../../helper');
+const {sendVerificationEmail} = require('../../helper');
 
 const register = async (req, res, callback) => {
     const {
