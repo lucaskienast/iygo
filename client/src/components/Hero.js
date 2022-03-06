@@ -1,11 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import heroBcg from '../assets/hero-bcg.jpeg'
+import cardsOverlay from '../assets/cardsOverlay.png'
 import heroBcg2 from '../assets/hero-bcg-2.jpeg'
 
 const Hero = () => {
-  return <h4>hero</h4>
+  return (
+    <Wrapper className='section-center'>
+      <article className='content'>
+        <h1>
+          Fight epic battles <br/>
+          with your friends
+        </h1>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate sunt voluptatibus facere error minus adipisci explicabo repellendus totam ullam quae!</p>
+        <Link to='/products' className='btn hero-btn'>
+          Get started
+        </Link>
+      </article>
+      <article className='img-container'>
+        <img src={cardsOverlay} alt='avatar and cards' className='main-img' />
+      </article>
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.section`
@@ -62,7 +78,6 @@ const Wrapper = styled.section`
       position: absolute;
       width: 10%;
       height: 80%;
-      background: var(--clr-primary-9);
       bottom: 0%;
       left: -8%;
       border-radius: var(--radius);
