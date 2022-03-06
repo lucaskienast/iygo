@@ -1,8 +1,27 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const Contact = () => {
-  return <h4>contact section</h4>
+  return (
+    <Wrapper className='section-center'>
+      <h3>Subscribe to our newsletter for updates.</h3>
+      <div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia omnis accusamus, minima quod reiciendis qui! Vitae sunt asperiores distinctio nulla.
+        </p>
+        <form className="contact-form">
+          <input 
+            type='email'
+            className='form-input' 
+            placeholder='Enter email'
+          />
+          <button type='submit' className='submit-btn'>
+            Register
+          </button>
+        </form>
+      </div>
+    </Wrapper>
+  );
 }
 const Wrapper = styled.section`
   padding: 5rem 0;
