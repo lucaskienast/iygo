@@ -1,12 +1,12 @@
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
-  GET_PRODUCTS_BEGIN,
-  GET_PRODUCTS_SUCCESS,
-  GET_PRODUCTS_ERROR,
-  GET_SINGLE_PRODUCT_BEGIN,
-  GET_SINGLE_PRODUCT_SUCCESS,
-  GET_SINGLE_PRODUCT_ERROR,
+  GET_CARDS_BEGIN,
+  GET_CARDS_SUCCESS,
+  GET_CARDS_ERROR,
+  GET_SINGLE_CARD_BEGIN,
+  GET_SINGLE_CARD_SUCCESS,
+  GET_SINGLE_CARD_ERROR
 } from '../actions'
 
 const products_reducer = (state, action) => {
@@ -16,8 +16,23 @@ const products_reducer = (state, action) => {
   if (action.type === SIDEBAR_CLOSE) {
     return {...state, isSidebarOpen: false};
   }
-
-  return state
+  if (action.type === GET_CARDS_BEGIN) {
+    return {...state, cardsLoading: true};
+  }
+  if (action.type === GET_CARDS_SUCCESS) {
+    const featuredCards = action.payload.slice(40, 45);
+    return {...state, 
+      cardsLoading: false,
+      cards: action.payload,
+      featuredCards
+    };
+  }
+  if (action.type === GET_CARDS_ERROR) {
+    return {...state, 
+      cardsLoading: false,
+      cardsError: true
+    };
+  }
   throw new Error(`No Matching "${action.type}" - action type`)
 }
 
