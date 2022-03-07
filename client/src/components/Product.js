@@ -1,11 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
-import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-const Product = () => {
-  return <h4>product</h4>
+const Product = ({card_images, name, id}) => {
+  return (
+    <Wrapper className='container'>
+      <Link to={`/products/${id}`}>
+        <img src={card_images[0].image_url} alt={name} />
+      </Link>
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.article`
@@ -17,7 +22,7 @@ const Wrapper = styled.article`
   img {
     width: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: var(--radius);
     transition: var(--transition);
   }
