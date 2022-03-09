@@ -33,6 +33,24 @@ const products_reducer = (state, action) => {
       cardsError: true
     };
   }
+  if (action.type === GET_SINGLE_CARD_BEGIN) {
+    return {...state, 
+      singleCardLoading: true,
+      singleCardError: false
+    };
+  }
+  if (action.type === GET_SINGLE_CARD_SUCCESS) {
+    return {...state, 
+      singleCardLoading: false,
+      singleCard: action.payload
+    };
+  }
+  if (action.type === GET_SINGLE_CARD_ERROR) {
+    return {...state, 
+      singleCardLoading: false,
+      singleCardError: true
+    };
+  }
   throw new Error(`No Matching "${action.type}" - action type`)
 }
 

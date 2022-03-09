@@ -29,7 +29,7 @@ const FeaturedProducts = () => {
       <div className='section-center featured'>
         {featured.map((card) => {
           return (
-            <Product key={card.id} {...card} />
+            <Product key={card.card_id} {...card} />
           );
         })}
       </div>

@@ -5,8 +5,44 @@ import { FaCheck } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
 
-const AddToCart = () => {
-  return <h4>addToCart </h4>
+const AddToCart = ({card}) => {
+
+  const {card_id} = card;
+  const [amount, setAmount] = useState(1);
+
+  const increase = () => {
+    setAmount((prev) => {
+      if (prev <5) {
+        return ++prev;
+      }
+      else {
+        return 5;
+      }    });
+  };
+
+  const decrease = () => {
+    setAmount((prev) => {
+      if (prev > 1) {
+        return --prev;
+      }
+      else {
+        return 1;
+      }
+    });
+  };
+
+  return (
+    <Wrapper>
+      <div className='btn-container'>
+        <AmountButtons amount={amount} 
+          increase={increase} 
+          decrease={decrease}/>
+        <Link to='/deck' className='btn'>
+          add to deck
+        </Link>
+      </div>
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.section`

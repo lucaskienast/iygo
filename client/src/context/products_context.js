@@ -1,7 +1,7 @@
-import axios from 'axios'
-import React, { useContext, useEffect, useReducer } from 'react'
-import reducer from '../reducers/products_reducer'
-import { products_url as url } from '../utils/constants'
+import axios from 'axios';
+import React, { useContext, useEffect, useReducer } from 'react';
+import reducer from '../reducers/products_reducer';
+import { products_url as url } from '../utils/constants';
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -11,17 +11,20 @@ import {
   GET_SINGLE_CARD_BEGIN,
   GET_SINGLE_CARD_SUCCESS,
   GET_SINGLE_CARD_ERROR
-} from '../actions'
+} from '../actions';
 
 const initialState = {
   isSidebarOpen: false,
   cardsLoading: false,
   cardsError: false,
   cards: [],
-  featuredCards: []
-}
+  featuredCards: [],
+  singleCardLoading: false,
+  singleCardError: false,
+  singleCard: {}
+};
 
-const ProductsContext = React.createContext()
+const ProductsContext = React.createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -45,12 +48,28 @@ export const ProductsProvider = ({ children }) => {
     }
   };
 
+  const fetchSingleCard = async(url) => {
+    dispatch({type: GET_SINGLE_CARD_BEGIN});
+    try {
+      const response = await axios.get(url);
+      const card = response.data.card;
+      dispatch({type: GET_SINGLE_CARD_SUCCESS, payload: card});
+    } catch (error) {
+      dispatch({type: GET_SINGLE_CARD_ERROR});
+    }
+  }
+
   useEffect(() => {
     fetchCards(`${url}`);
   }, []);
 
   return (
-    <ProductsContext.Provider value={{...state, openSidebar, closeSidebar}}>
+    <ProductsContext.Provider 
+      value={{...state, 
+        openSidebar, 
+        closeSidebar,
+        fetchSingleCard
+    }}>
       {children}
     </ProductsContext.Provider>
   )

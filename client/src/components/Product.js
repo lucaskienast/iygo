@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 
-const Product = ({card_images, name, id}) => {
+const Product = ({card_images, name, card_id}) => {
   return (
     <Wrapper className='container'>
-      <Link to={`/products/${id}`}>
+      <Link to={`/products/${card_id}`}>
         <img src={card_images[0].image_url} alt={name} />
       </Link>
     </Wrapper>
