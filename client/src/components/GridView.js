@@ -2,13 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import Product from './Product'
 
-const GridView = () => {
-  return <h4>Grid View</h4>
+const GridView = ({cards}) => {
+  return (
+    <Wrapper>
+      <div className='products-container'>
+        {cards.map((card) => {
+          return <Product key={card.card_id} {...card} />
+        })}
+      </div>
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.section`
   img {
-    height: 175px;
+    width: 250px;
   }
 
   .products-container {
