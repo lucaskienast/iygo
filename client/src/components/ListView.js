@@ -1,21 +1,51 @@
-import React from 'react'
-import styled from 'styled-components'
-import { formatPrice } from '../utils/helpers'
-import { Link } from 'react-router-dom'
-const ListView = () => {
-  return <h4>list view</h4>
+import React from 'react';
+import styled from 'styled-components';
+import { formatPrice } from '../utils/helpers';
+import { Link } from 'react-router-dom';
+
+const ListView = ({cards}) => {
+  return (
+    <Wrapper>
+      {cards.map((card) => {
+        const {
+          card_id,
+          card_images, 
+          name, 
+          desc, 
+          type, 
+          race
+        } = card;
+
+        return (
+          <article key={card_id}>
+            <img src={card_images[0].image_url} alt={name} />
+            <div>
+              <h4>{name}</h4>
+              <h5>Type: {type}</h5>
+              <h5>Race: {race}</h5>
+              <p>{desc}</p>
+              <Link to={`/products/${card_id}`} className='btn'>
+                Details
+              </Link>
+            </div>
+          </article>
+        );
+
+      })}
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.section`
   display: grid;
-  row-gap: 3rem;
+  row-gap: 1rem;
 
   img {
     width: 100%;
     display: block;
     width: 300px;
-    height: 200px;
-    object-fit: cover;
+    height: 300px;
+    object-fit: contain;
     border-radius: var(--radius);
     margin-bottom: 1rem;
   }
@@ -31,7 +61,7 @@ const Wrapper = styled.section`
     margin-bottom: 1rem;
   }
   .btn {
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     padding: 0.25rem 0.5rem;
   }
   @media (min-width: 992px) {
