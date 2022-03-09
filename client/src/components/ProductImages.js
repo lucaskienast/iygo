@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-const ProductImages = () => {
-  return <h4>product images</h4>
+const ProductImages = ({ images = [{url: ''}] }) => {
+  const [main, setMain] = useState(images[0]);
+  console.log(main);
+  return (
+    <Wrapper>
+      <img src={main.image_url} alt='main image' className='main' />
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.section`
@@ -13,7 +19,7 @@ const Wrapper = styled.section`
     width: 100%;
     display: block;
     border-radius: var(--radius);
-    object-fit: cover;
+    object-fit: contain;
   }
   .gallery {
     margin-top: 1rem;
