@@ -17,13 +17,25 @@ Already built-in:
 - Avatar DB and API
 - Authentication
 
-In progress:
+V1 - In progress:
 - Login/Register UI
 - Dummy season data
 
-To come:
+V1 - to come:
 - Deck builder (client)
 - Avatar builder (client)
+- Deck analytics (client)
+- Avatar analytics (client)
+- Season creator (server)
+- Season creator (client)
+- Season history migration (database)
+- Next match (server)
+- Next match (client)
+- Match record entry (server)
+- Match record entry (client)
+- Season analytics (client)
+
+V2 - to come:
 - Duel mode customization
 - PvP action
 - Players chat
