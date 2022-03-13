@@ -5,7 +5,7 @@ import {
   SET_GRIDVIEW,
   SET_LISTVIEW,
   UPDATE_SORT,
-  SORT_PRODUCTS,
+  SORT_CARDS,
   UPDATE_FILTERS,
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
@@ -15,7 +15,8 @@ import { useProductsContext } from './products_context';
 const initialState = {
   filteredCards: [],
   allCards: [],
-  gridView: false
+  gridView: true,
+  sort: 'name-a'
 };
 
 const FilterContext = React.createContext();
@@ -25,11 +26,31 @@ export const FilterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    dispatch({ type: LOAD_CARDS, payload: cards});
+    dispatch({ type: LOAD_CARDS, payload: cards });
   }, [cards]);
 
+  useEffect(() => {
+    dispatch({ type: SORT_CARDS });
+  }, [cards, state.sort]);
+
+  const setGridView = () => {
+    dispatch({ type: SET_GRIDVIEW });
+  }
+
+  const setListView = () => {
+    dispatch({ type: SET_LISTVIEW });
+  }
+
+  const updateSort = (event) => {
+    // const name = event.target.name;
+    const value = event.target.value;
+    dispatch({ type: UPDATE_SORT, payload: value });
+  }
+
   return (
-    <FilterContext.Provider value={{...state}}>
+    <FilterContext.Provider 
+      value={{...state, setGridView, setListView, updateSort }}
+    >
       {children}
     </FilterContext.Provider>
   );
