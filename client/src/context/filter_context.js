@@ -7,7 +7,7 @@ import {
   UPDATE_SORT,
   SORT_CARDS,
   UPDATE_FILTERS,
-  FILTER_PRODUCTS,
+  FILTER_CARDS,
   CLEAR_FILTERS,
 } from '../actions';
 import { useProductsContext } from './products_context';
@@ -16,7 +16,22 @@ const initialState = {
   filteredCards: [],
   allCards: [],
   gridView: true,
-  sort: 'name-a'
+  sort: 'name-a',
+  filters: {
+    name: '',
+    type: 'all',
+    race: 'all',
+    attribute: 'all',
+    archetype: 'all',
+    desc: '',
+    atk: 0,
+    min_atk: 0,
+    max_atk: 0,
+    def: 0,
+    min_def: 0,
+    max_def: 0,
+    level: 0
+  }
 };
 
 const FilterContext = React.createContext();
@@ -30,8 +45,9 @@ export const FilterProvider = ({ children }) => {
   }, [cards]);
 
   useEffect(() => {
+    dispatch({ type: FILTER_CARDS });
     dispatch({ type: SORT_CARDS });
-  }, [cards, state.sort]);
+  }, [cards, state.sort, state.filters]);
 
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW });
@@ -47,9 +63,33 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: UPDATE_SORT, payload: value });
   }
 
+  const updateFilters = (e) => {   
+    // text input
+    let name = e.target.name;
+    let value = e.target.value;
+    if (['type'].includes(name)) {
+      // button
+      value = e.target.textContent;
+    }
+    if (['atk', 'def'].includes(name)) {
+      value = Number(value);
+    }
+    dispatch({ type: UPDATE_FILTERS, payload: {name, value} });
+  }
+
+  const clearFilters = (e) => {
+    dispatch({ type: CLEAR_FILTERS });
+  }
+
   return (
     <FilterContext.Provider 
-      value={{...state, setGridView, setListView, updateSort }}
+      value={{...state, 
+        setGridView, 
+        setListView, 
+        updateSort,
+        updateFilters,
+        clearFilters
+      }}
     >
       {children}
     </FilterContext.Provider>

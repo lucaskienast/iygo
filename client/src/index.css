@@ -11,13 +11,13 @@ Variables
   --clr-primary-3: hsl(0, 0%, 47%);
   --clr-primary-4: hsl(22, 28%, 45%);
   /* primary/main color */
-  --clr-primary-5: hsl(290, 100%, 70%);
+  --clr-primary-5: hsl(0, 0%, 0%);
   /* lighter shades of primary color */
   --clr-primary-6: hsl(22, 31%, 60%);
-  --clr-primary-7: hsl(290, 100%, 88%);
+  --clr-primary-7: hsl(0, 1%, 69%);
   --clr-primary-8: hsl(20, 31%, 74%);
-  --clr-primary-9: hsl(22, 31%, 81%);
-  --clr-primary-10: hsl(290, 93%, 95%);
+  --clr-primary-9: hsl(0, 0%, 85%);
+  --clr-primary-10: hsl(0, 0%, 82%);
   /* darkest grey - used for headings */
   --clr-grey-1: hsl(209, 61%, 16%);
   --clr-grey-2: hsl(211, 39%, 23%);

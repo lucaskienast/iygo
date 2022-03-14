@@ -16,7 +16,7 @@ const GridView = ({cards}) => {
 
 const Wrapper = styled.section`
   img {
-    width: 250px;
+    width: 300px;
   }
 
   .products-container {

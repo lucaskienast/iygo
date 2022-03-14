@@ -66,7 +66,7 @@ const Wrapper = styled.section`
     letter-spacing: var(--spacing);
     cursor: pointer;
     transition: var(--transition);
-    color: var(--clr-black);
+    color: var(--clr-white);
   }
   .submit-btn:hover {
     color: var(--clr-white);
