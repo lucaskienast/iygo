@@ -1,14 +1,158 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useFilterContext } from '../context/filter_context'
-import { getUniqueValues, formatPrice } from '../utils/helpers'
-import { FaCheck } from 'react-icons/fa'
+import React from 'react';
+import styled from 'styled-components';
+import { useFilterContext } from '../context/filter_context';
+import { getUniqueValues, formatPrice } from '../utils/helpers';
+import { FaCheck } from 'react-icons/fa';
 
 const Filters = () => {
-  return <h4>filters</h4>
+
+  const {
+    filters: {
+      name,
+      type,
+      race,
+      attribute,
+      desc,
+      archetype,
+      atk,
+      min_atk,
+      max_atk,
+      def,
+      min_def,
+      max_def,
+      level
+    },
+    updateFilters,
+    clearFilters,
+    allCards
+  } = useFilterContext();
+
+
+  const types = getUniqueValues(allCards, 'type');
+  const races = getUniqueValues(allCards, 'race');
+  const attributes = getUniqueValues(allCards, 'attribute');
+  const archetypes = getUniqueValues(allCards, 'archetype');
+
+  return (
+    <Wrapper>
+      <div className='content'>
+        <form onSubmit={(e) => e.preventDefault()}>
+          {/** Search input Start */}
+          <div className='form-control'>
+            <input type='text'
+              name='name'
+              placeholder='name'
+              className='search-input'
+              value={name}
+              onChange={updateFilters}/>
+          </div>
+          {/** Search input End */}
+          {/** Types input Start */}
+          <div className='form-control'>
+            <h5>Type</h5>
+            <div>
+              {types.map((t, index) => {
+                return (
+                  <button key={index}
+                    onClick={updateFilters}
+                    name='type'
+                    type='button'
+                    className={`${type === t ? 'active' : null}`}
+                  >{t}</button>
+                );
+              })}
+            </div>
+          </div>
+          {/** Types input End */}
+          {/** Races input Start */}
+          <div className='form-control'>
+            <h5>Race</h5>
+            <div>
+                <select name='race' 
+                  value={race}
+                  onChange={updateFilters}
+                  className='race'
+                >
+                  {races.map((r, index) => {
+                    return (
+                      <option key={index} values={r}>{r}</option>
+                    );
+                  })};
+                </select>
+            </div>
+          </div>
+          {/** Races input End */}
+          {/** Attributes input Start */}
+          <div className='form-control'>
+            <h5>Attribute</h5>
+            <div>
+                <select name='attribute' 
+                  value={attribute}
+                  onChange={updateFilters}
+                  className='attribute'
+                >
+                  {attributes.map((a, index) => {
+                    return (
+                      <option key={index} values={a}>{a}</option>
+                    );
+                  })};
+                </select>
+            </div>
+          </div>
+          {/** Attributes input End */}
+          {/** ATK & DEF input Start */}
+          <div className='form-control'>
+            <h5>ATK</h5>
+            <p className='price'>{atk}</p>
+            <input type="range" 
+              name='atk' 
+              onChange={updateFilters} 
+              min={min_atk}
+              max={max_atk}
+              value={atk}
+            />
+            <h5>DEF</h5>
+            <p className='price'>{def}</p>
+            <input type="range" 
+              name='def' 
+              onChange={updateFilters} 
+              min={min_def}
+              max={max_def}
+              value={def}
+            />
+          </div>
+          {/** ATK & DEFinput End */}
+          {/** Archetypes input Start */}
+          <div className='form-control'>
+            <h5>Archetype</h5>
+            <div>
+                <select name='archetype' 
+                  value={archetype}
+                  onChange={updateFilters}
+                  className='archetype'
+                >
+                  {archetypes.map((a, index) => {
+                    return (
+                      <option key={index} values={a}>{a}</option>
+                    );
+                  })};
+                </select>
+            </div>
+          </div>
+          {/** Archetypes input End */}
+        </form>
+        <button type='button' 
+          className='clear-btn' 
+          onClick={clearFilters}
+        >Clear Filters</button>
+      </div>
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.section`
+  overflow-y: auto;
+
   .form-control {
     margin-bottom: 1.25rem;
     h5 {

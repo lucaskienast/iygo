@@ -17,18 +17,21 @@ const ListView = ({cards}) => {
         } = card;
 
         return (
-          <article key={card_id}>
-            <img src={card_images[0].image_url} alt={name} />
-            <div>
-              <h4>{name}</h4>
-              <h5>Type: {type}</h5>
-              <h5>Race: {race}</h5>
-              <p>{desc}</p>
-              <Link to={`/products/${card_id}`} className='btn'>
-                Details
-              </Link>
-            </div>
-          </article>
+          <div>
+            <article key={card_id}>
+              <Link to={`/products/${card_id}`}>
+                <img src={card_images[0].image_url} alt={name} />
+                </Link>
+              <div>
+                <h5>{name}</h5>
+                <p>Type: {type}</p>
+                <p>Race: {race}</p>
+                <br/>
+                <p>{desc}</p>
+              </div>
+            </article>
+            <hr/>
+          </div>
         );
 
       })}
@@ -38,31 +41,32 @@ const ListView = ({cards}) => {
 
 const Wrapper = styled.section`
   display: grid;
-  row-gap: 1rem;
+  row-gap: 0rem;
 
   img {
     width: 100%;
     display: block;
-    width: 300px;
-    height: 300px;
+    width: 170px;
+    height: 270px;
     object-fit: contain;
     border-radius: var(--radius);
-    margin-bottom: 1rem;
+    margin-bottom: 0rem;
   }
-  h4 {
-    margin-bottom: 0.5rem;
+  h5 {
+    margin-bottom: 1rem;
   }
   .price {
     color: var(--clr-primary-6);
-    margin-bottom: 0.75rem;
   }
   p {
+    font-size: 14px;
     max-width: 45em;
-    margin-bottom: 1rem;
+    margin-bottom: 0rem;
   }
   .btn {
     font-size: 0.7rem;
     padding: 0.25rem 0.5rem;
+    margin-top: 1rem;
   }
   @media (min-width: 992px) {
     article {

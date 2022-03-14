@@ -26,7 +26,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler.js');
 app.set('trust proxy', 1); // for heroku deployment
 app.use(rateLimiter({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100 // limit each IP to 100 requests per windowMs
+    max: 1000 // limit each IP to 1000 requests per windowMs
 }));
 app.use(morgan('tiny'));
 app.use(express.json());
