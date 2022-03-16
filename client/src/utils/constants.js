@@ -43,7 +43,7 @@ export const services = [
 ]
 
 //export const products_url = 'https://course-api.com/react-store-products'
-export const products_url = 'http://localhost:5000/api/v1/cards';
+export const products_url = 'http://localhost:5000/api/v1/cards?limit=20000';
 
 //export const single_product_url = `https://course-api.com/react-store-single-product?id=`
 export const single_product_url = 'http://localhost:5000/api/v1/cards/';
