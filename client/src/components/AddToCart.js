@@ -8,6 +8,7 @@ import AmountButtons from './AmountButtons'
 const AddToCart = ({card}) => {
 
   const {card_id} = card;
+  const {addToDeck} = useCartContext();
   const [amount, setAmount] = useState(1);
 
   const increase = () => {
@@ -37,7 +38,9 @@ const AddToCart = ({card}) => {
         <AmountButtons amount={amount} 
           increase={increase} 
           decrease={decrease}/>
-        <Link to='/deck' className='btn'>
+        <Link to='/cart' 
+          className='btn'
+          onClick={() => addToDeck(card, amount)}>
           add to deck
         </Link>
       </div>
