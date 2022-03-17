@@ -7,7 +7,9 @@ import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 
 const CartButtons = () => {
+
   const {closeSidebar} = useProductsContext();
+  const {totalCards} = useCartContext();
 
   return (
     <Wrapper className="cart-btn-wrapper">
@@ -15,11 +17,8 @@ const CartButtons = () => {
         Deck
         <span className="cart-container">
           <FaStackOverflow />
-          {/*
-          <span className="cart-value">
-            12
-          </span>
-          */}
+            {(totalCards > 0) && 
+            <span className="cart-value">{totalCards}</span>}
         </span>
       </Link>
       <button type="button" className="auth-btn">

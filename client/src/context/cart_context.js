@@ -2,15 +2,24 @@ import React, { useEffect, useContext, useReducer } from 'react'
 import reducer from '../reducers/cart_reducer'
 import {
   ADD_TO_DECK,
-  REMOVE_CART_ITEM,
-  TOGGLE_CART_ITEM_AMOUNT,
-  CLEAR_CART,
-  COUNT_CART_TOTALS,
+  REMOVE_FROM_DECK,
+  TOGGLE_DECK_CARD_AMOUNT,
+  CLEAR_DECK,
+  COUNT_DECK_CARDS_TOTALS
 } from '../actions'
+
+const getLocalStorage = () => {
+  let deck = localStorage.getItem('deck');
+  if (deck) {
+    return JSON.parse(deck);
+  } else {
+    return [];
+  }
+}
 
 const initialState = {
   // general
-  deck: [],
+  deck: getLocalStorage(),
   totalCards: 0,
   totalTraps: 0,
   totalSpells: 0,
@@ -44,12 +53,40 @@ export const CartProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    dispatch({type: COUNT_DECK_CARDS_TOTALS});
+    localStorage.setItem('deck', JSON.stringify(state.deck));
+  }, [state.deck]);
+
   const addToDeck = (card, amount) => {
     dispatch({type: ADD_TO_DECK, payload: {card, amount}});
   }
 
+  const removeFromDeck = (card) => {
+    dispatch({type: REMOVE_FROM_DECK, payload: card});
+  }
+
+  const toggleAmount = (card, value) => {
+    dispatch({type: TOGGLE_DECK_CARD_AMOUNT, payload: {card, value}});
+  }
+
+  const clearDeck = () => {
+    dispatch({type: CLEAR_DECK});
+  }
+
+  const countCards = () => {
+    dispatch({type: COUNT_DECK_CARDS_TOTALS});
+  }
+
   return (
-    <CartContext.Provider value={{...state, addToDeck}}>
+    <CartContext.Provider 
+      value={{...state, 
+        addToDeck,
+        removeFromDeck,
+        toggleAmount,
+        clearDeck,
+        countCards
+      }}>
       {children}
     </CartContext.Provider>
   )
