@@ -19,7 +19,7 @@ const AddToCart = ({card}) => {
       else {
         return 5;
       }    });
-  };
+  }
 
   const decrease = () => {
     setAmount((prev) => {
@@ -30,7 +30,7 @@ const AddToCart = ({card}) => {
         return 1;
       }
     });
-  };
+  }
 
   return (
     <Wrapper>

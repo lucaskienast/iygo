@@ -1,11 +1,35 @@
-import React from 'react'
-import styled from 'styled-components'
-import { formatPrice } from '../utils/helpers'
-import AmountButtons from './AmountButtons'
-import { FaTrash } from 'react-icons/fa'
-import { useCartContext } from '../context/cart_context'
-const CartItem = () => {
-  return <h4>cart item</h4>
+import React from 'react';
+import styled from 'styled-components';
+import { formatPrice } from '../utils/helpers';
+import AmountButtons from './AmountButtons';
+import { FaTrash } from 'react-icons/fa';
+import { useCartContext } from '../context/cart_context';
+
+const CartItem = ({card, amount}) => {
+
+  const {removeFromDeck, toggleAmount} = useCartContext();
+
+  const increase = () => {
+    toggleAmount(card, 'inc');
+  }
+
+  const decrease = () => {
+    toggleAmount(card, 'dec');
+  }
+
+  return (
+    <Wrapper>
+      <img src={card.card_images[0].image_url} alt={card.name} />
+      <p>{card.name}</p>
+      <p>{card.type}</p>
+      <AmountButtons amount={amount} increase={increase} decrease={decrease} />
+      <button type='button' 
+        className='remove-btn'
+        onClick={() => removeFromDeck(card)}>
+          <FaTrash />
+        </button>
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.article`
@@ -20,7 +44,7 @@ const Wrapper = styled.article`
   grid-template-rows: 75px;
   gap: 3rem 1rem;
   justify-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   align-items: center;
   .title {
     grid-template-rows: 75px;
@@ -35,7 +59,7 @@ const Wrapper = styled.article`
     height: 100%;
     display: block;
     border-radius: var(--radius);
-    object-fit: cover;
+    object-fit: contain;
   }
   h5 {
     font-size: 0.75rem;
@@ -116,9 +140,9 @@ const Wrapper = styled.article`
         height: 0.75rem;
       }
     }
-    grid-template-columns: 1fr 1fr 1fr 1fr auto;
+    grid-template-columns: 1.3fr 1.1fr 1.1fr 1.1fr auto;
     align-items: center;
-    grid-template-rows: 75px;
+    grid-template-rows: 150px;
     img {
       height: 100%;
     }
