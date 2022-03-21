@@ -22,18 +22,15 @@ V1 - In progress:
 - Dummy season data
 
 V1 - to come:
-- Deck builder (client)
-- Avatar builder (client)
-- Deck analytics (client)
-- Avatar analytics (client)
-- Season creator (server)
-- Season creator (client)
-- Season history migration (database)
-- Next match (server)
-- Next match (client)
-- Match record entry (server)
-- Match record entry (client)
-- Season analytics (client)
+- Deck builder
+- Avatar builder
+- Deck analytics
+- Avatar analytics
+- Season creator
+- Season history migration
+- Next match
+- Match record entry
+- Season analytics
 
 V2 - to come:
 - Duel mode customization
