@@ -20,7 +20,7 @@ const products_reducer = (state, action) => {
     return {...state, cardsLoading: true};
   }
   if (action.type === GET_CARDS_SUCCESS) {
-    const featuredCards = action.payload.slice(40, 45);
+    const featuredCards = action.payload.slice(35, 40);
     return {...state, 
       cardsLoading: false,
       cards: action.payload,

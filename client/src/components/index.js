@@ -1,4 +1,6 @@
 import FeaturedProducts from './FeaturedProducts'
+import FeaturedAvatars from './FeaturedAvatars'
+import AvatarsHome from './AvatarsHome'
 import Navbar from './Navbar'
 import CartButtons from './CartButtons'
 import Footer from './Footer'
@@ -19,6 +21,8 @@ import PageHero from './PageHero'
 import StripeCheckout from './StripeCheckout'
 export {
   FeaturedProducts,
+  FeaturedAvatars,
+  AvatarsHome,
   Navbar,
   CartButtons,
   Footer,

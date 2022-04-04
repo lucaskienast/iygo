@@ -1,32 +1,33 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
-import reducer from '../reducers/products_reducer';
-import { products_url as url } from '../utils/constants';
+import reducer from '../reducers/avatars_reducer';
+import { avatars_url as url } from '../utils/constants';
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
-  GET_CARDS_BEGIN,
-  GET_CARDS_SUCCESS,
-  GET_CARDS_ERROR,
-  GET_SINGLE_CARD_BEGIN,
-  GET_SINGLE_CARD_SUCCESS,
-  GET_SINGLE_CARD_ERROR
+  GET_AVATARS_BEGIN,
+  GET_AVATARS_SUCCESS,
+  GET_AVATARS_ERROR,
+  GET_SINGLE_AVATAR_BEGIN,
+  GET_SINGLE_AVATAR_SUCCESS,
+  GET_SINGLE_AVATAR_ERROR
 } from '../actions';
 
 const initialState = {
   isSidebarOpen: false,
-  cardsLoading: false,
-  cardsError: false,
-  cards: [],
-  featuredCards: [],
-  singleCardLoading: false,
-  singleCardError: false,
-  singleCard: {}
+  avatarsLoading: false,
+  avatarsError: false,
+  avatars: [],
+  featuredAvatars: [],
+  singleAvatarLoading: false,
+  singleAvatarError: false,
+  singleAvatar: {}
 };
 
-const ProductsContext = React.createContext();
+const AvatarsContext = React.createContext();
 
-export const ProductsProvider = ({ children }) => {
+export const AvatarsProvider = ({ children }) => {
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const openSidebar = () => {
@@ -37,44 +38,44 @@ export const ProductsProvider = ({ children }) => {
     dispatch({type: SIDEBAR_CLOSE});
   };
 
-  const fetchCards = async(url) => {
-    dispatch({type: GET_CARDS_BEGIN});
+  const fetchAvatars = async(url) => {
+    dispatch({type: GET_AVATARS_BEGIN});
     try {
       const response = await axios.get(url);
-      const cards = response.data.cards;
-      dispatch({type: GET_CARDS_SUCCESS, payload: cards});
+      const avatars = response.data.avatars;
+      dispatch({type: GET_AVATARS_SUCCESS, payload: avatars});
     } catch (error) {
-      dispatch({type: GET_CARDS_ERROR});
+      dispatch({type: GET_AVATARS_ERROR});
     }
   };
 
-  const fetchSingleCard = async(url) => {
-    dispatch({type: GET_SINGLE_CARD_BEGIN});
+  const fetchSingleAvatar = async(url) => {
+    dispatch({type: GET_SINGLE_AVATAR_BEGIN});
     try {
       const response = await axios.get(url);
-      const card = response.data.card;
-      dispatch({type: GET_SINGLE_CARD_SUCCESS, payload: card});
+      const avatar = response.data.avatar;
+      dispatch({type: GET_SINGLE_AVATAR_SUCCESS, payload: avatar});
     } catch (error) {
-      dispatch({type: GET_SINGLE_CARD_ERROR});
+      dispatch({type: GET_SINGLE_AVATAR_ERROR});
     }
   }
 
   useEffect(() => {
-    fetchCards(`${url}`);
+    fetchAvatars(`${url}`);
   }, []);
 
   return (
-    <ProductsContext.Provider 
+    <AvatarsContext.Provider 
       value={{...state, 
         openSidebar, 
         closeSidebar,
-        fetchSingleCard
+        fetchSingleAvatar
     }}>
       {children}
-    </ProductsContext.Provider>
+    </AvatarsContext.Provider>
   )
 }
 // make sure use
-export const useProductsContext = () => {
-  return useContext(ProductsContext)
+export const useAvatarsContext = () => {
+  return useContext(AvatarsContext)
 }

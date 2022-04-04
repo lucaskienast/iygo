@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Contact = () => {
   return (
     <Wrapper className='section-center'>
-      <h3>Subscribe to our newsletter for updates.</h3>
+      <h3>Subscribe to our life-ticker for season updates</h3>
       <div>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia omnis accusamus, minima quod reiciendis qui! Vitae sunt asperiores distinctio nulla.

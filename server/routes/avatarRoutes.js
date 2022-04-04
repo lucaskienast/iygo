@@ -14,7 +14,7 @@ const {
 
 router.route('/')
 .post(authenticateUser, createAvatar)
-.get(authenticateUser, getAllAvatars);
+.get(/*authenticateUser,*/ getAllAvatars);
 
 router.route('/showAllMyAvatars')
 .get(authenticateUser, getCurrentUsersAvatars);
