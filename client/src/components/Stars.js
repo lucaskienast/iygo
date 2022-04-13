@@ -1,10 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
-import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
+//import styled from 'styled-components'
+
 const Stars = () => {
   return <h4>stars</h4>
 }
-
+/*
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -19,4 +19,5 @@ const Wrapper = styled.div`
   }
   margin-bottom: 0.5rem;
 `
+*/
 export default Stars
