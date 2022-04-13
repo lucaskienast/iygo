@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import cardsOverlay from '../assets/cardsOverlay.png'
-import heroBcg2 from '../assets/hero-bcg-2.jpeg'
 
 const Hero = () => {
   return (

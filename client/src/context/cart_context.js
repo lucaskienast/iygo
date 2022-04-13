@@ -26,25 +26,25 @@ const initialState = {
   totalMonsters: 0,
   totalDiffCards: 0,
   // monsters
-  totalNormal: 0,
+  totalNormalMonsters: 0,
   totalFusion: 0,
   totalRitual: 0,
   totalEffect: 0,
   totalFlipEffect: 0,
   total1800PlusAtk: 0,
   total1800PlusDef: 0,
-  totalSpecialSummon: 0,
+  totalSpecialSummonMonster: 0,
   totalFiveOrMoreStars: 0,
   totalFourOrLessStars: 0,
   totalFourOrLessStars1800PlusAtk: 0,
   totalFourOrLessStars1800PlusDef: 0,
   // mana
-  totalNormal: 0,
+  totalNormalMana: 0,
   totalEquip: 0,
   totalCounter: 0,
   totalQuickPlay: 0,
   totalContinuous: 0,
-  totalSpecialSummon: 0
+  totalSpecialSummonMana: 0
 }
 
 const CartContext = React.createContext()

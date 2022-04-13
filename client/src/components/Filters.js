@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useFilterContext } from '../context/filter_context';
-import { getUniqueValues, formatPrice } from '../utils/helpers';
-import { FaCheck } from 'react-icons/fa';
+import { getUniqueValues } from '../utils/helpers';
 
 const Filters = () => {
 
@@ -12,7 +11,7 @@ const Filters = () => {
       type,
       race,
       attribute,
-      desc,
+      //desc,
       archetype,
       atk,
       min_atk,
@@ -20,7 +19,7 @@ const Filters = () => {
       def,
       min_def,
       max_def,
-      level
+      //level
     },
     updateFilters,
     clearFilters,

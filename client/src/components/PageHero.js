@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+//import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const PageHero = ({title, card}) => {
@@ -14,6 +14,7 @@ const PageHero = ({title, card}) => {
   );
 }
 
+/*
 const Wrapper = styled.section`
   background: var(--clr-primary-10);
   width: 100%;
@@ -31,5 +32,6 @@ const Wrapper = styled.section`
     color: var(--clr-primary-1);
   }
 `
+*/
 
 export default PageHero

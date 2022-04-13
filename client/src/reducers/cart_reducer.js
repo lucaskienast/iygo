@@ -39,9 +39,8 @@ const cart_reducer = (state, action) => {
           }
           return {...c, amount: newAmount};
         }
-      } else {
-        return c;
       }
+      return c;
     });
     return {...state, deck: tempDeck};
   }

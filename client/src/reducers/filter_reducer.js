@@ -1,4 +1,3 @@
-import { GiCardRandom } from 'react-icons/gi';
 import {
   LOAD_CARDS,
   SET_LISTVIEW,
@@ -80,14 +79,14 @@ const filter_reducer = (state, action) => {
       race,
       attribute,
       archetype,
-      desc,
+      //desc,
       atk,
-      min_atk,
-      max_atk,
+      //min_atk,
+      //max_atk,
       def,
-      min_def,
-      max_def,
-      level
+      //min_def,
+      //max_def,
+      //level
     } = state.filters;
     let tempCards = [...allCards];
     // filter cards
