@@ -15,11 +15,9 @@ Already built-in:
 - User DB and API
 - Deck DB and API
 - Avatar DB and API
-- Authentication
 
 V1 - In progress:
 - Login/Register UI
-- Dummy season data
 
 V1 - to come:
 - Deck builder
