@@ -1,4 +1,4 @@
-# Yu-Gi-Oh! Webapp
+# Yu-Gi-Oh! Webapp (1.0)
 
 Implementation of Yu-Gi-Oh! trading card game with MongoDB database, Node-Express backend (RESTful API), and React frontend. The aim of this 1.0 project is to create a beautiful prototype YGO card-library web-platform that is easy to understand and implement, which then serves as the foundation for our full scale duelling platform, which will be implemented using Java instead of NodeJS, whilst combining MySQL, MongoDB, and Redis. React will likely remain as the front-end framework of choice, but will be implemented using TypeScript (not JavaScript).
 
