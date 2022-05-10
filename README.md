@@ -1,6 +1,6 @@
 # Yu-Gi-Oh! Webapp
 
-Implementation of Yu-Gi-Oh! trading card game with MongoDB database, Node-Express backend (RESTful API), and React frontend (not started yet). The aim of this project is to create a beautiful YGO duel web-platform that is easy to understand and revolves around the GOAT format with some extra features to make the game simpler, yet more dynamic, in order to ultimately make playing more accessible to players who seek various levels of customization to their duels. 
+Implementation of Yu-Gi-Oh! trading card game with MongoDB database, Node-Express backend (RESTful API), and React frontend. The aim of this 1.0 project is to create a beautiful prototype YGO card-library web-platform that is easy to understand and implement, which then serves as the foundation for our full scale duelling platform, which will be implemented using Java instead of NodeJS, whilst combining MySQL, MongoDB, and Redis. React will likely remain as the front-end framework of choice, but will be implemented using TypeScript (not JavaScript).
 
 ## Installation
 Use `git clone` to get a copy of this repository.
@@ -15,11 +15,11 @@ Already built-in:
 - User DB and API
 - Deck DB and API
 - Avatar DB and API
+- Card library UI
+- Login and register UI
+- Deck builder UI
 
-V1 - In progress:
-- Login/Register UI
-
-V1 - to come:
+V2 - to come:
 - Deck builder
 - Avatar builder
 - Deck analytics
@@ -29,8 +29,6 @@ V1 - to come:
 - Next match
 - Match record entry
 - Season analytics
-
-V2 - to come:
 - Duel mode customization
 - PvP action
 - Players chat
