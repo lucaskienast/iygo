@@ -32,3 +32,13 @@ V2 - to come:
 - Duel mode customization
 - PvP action
 - Players chat
+
+# Screenshots
+## Home
+![screencapture-localhost-3000-cart-2022-05-15-16_20_06](https://user-images.githubusercontent.com/80713721/168477603-6b5f0c01-3171-4e97-9f7e-01647949d89f.png)
+
+## Card Store
+![screencapture-localhost-3000-products-2022-05-15-16_18_28](https://user-images.githubusercontent.com/80713721/168477613-2bf901f4-88e3-4703-aa6a-e4430cd6cb9a.png)
+
+## Deck Overview
+![screencapture-localhost-3000-2022-05-15-16_17_02](https://user-images.githubusercontent.com/80713721/168477625-ec502495-86bb-4b90-99e6-fc3769e833fa.png)
