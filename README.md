@@ -20,7 +20,6 @@ Already built-in:
 - Deck builder UI
 
 V2 - to come:
-- Deck builder
 - Avatar builder
 - Deck analytics
 - Avatar analytics
